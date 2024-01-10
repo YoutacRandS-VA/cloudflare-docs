@@ -197,7 +197,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/platform/custom-domains/#add-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
@@ -288,7 +288,7 @@ Contact your hosting provider to exclude the following common causes at your or
 -   No [SNI](https://developers.cloudflare.com/fundamentals/reference/glossary/#server-name-indication-sni) support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If 525 errors occur intermittently, review the origin web server error
 logs to determine the cause. Configure Apache to [log mod\_ssl
 errors](https://cwiki.apache.org/confluence/display/HTTPD/DebuggingSSLProblems#Enable_SSL_logging).
@@ -314,7 +314,7 @@ Error 526 occurs when these two conditions are true:
 
 **Resolution**
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 For a potential quick fix, set **SSL** to *Full* instead of *Full
 (strict)* in the **Overview** tab of your Cloudflare **SSL/TLS** app for
 the domain.
@@ -424,7 +424,7 @@ If TLS/SSL errors occur, check the following on the origin web server and ensure
 -   the SAN or Common Name of the origin web server’s SSL certificate contains the requested or target hostname
 -   **SSL** is set to [Full or Full (Strict)](/ssl/origin-configuration/ssl-modes) in the **Overview** tab of the Cloudflare **SSL/TLS** app
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If your origin web server SSL certificate is self-signed, [set
 *validate.cert=0* in
 *railgun.conf*](/railgun/user-guide/railgun-ca-certificates).
