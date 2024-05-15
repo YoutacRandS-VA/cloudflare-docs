@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify
+## Auto Minify (deprecated) { #auto-minify }
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
@@ -106,6 +106,31 @@ header: API configuration example
 ---
 "action_parameters": {
   "disable_apps": true
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
+## Disable Real User Monitoring (RUM)
+
+[Cloudflare Web Analytics](/analytics/web-analytics/), also known as Real User Monitoring (RUM), is Cloudflare's free, privacy-first analytics for your website.
+
+Use this setting to turn off Web Analytics for matching requests.
+
+{{<render file="_configuration-rule-wins-over-rum-rule.md" withParameters="Configuration rules;;[Web Analytics rules](/analytics/web-analytics/configuring-web-analytics/rules/)">}}
+
+{{<details header="API information">}}
+
+API configuration property name: `"disable_rum"` (boolean).
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+  "disable_rum": true
 }
 ```
 
@@ -338,7 +363,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes
+## Server Side Excludes (deprecated) { #server-side-excludes }
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 
