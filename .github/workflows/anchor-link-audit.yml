@@ -6,7 +6,7 @@ name: Anchor link audit
 
 on:
   schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+    - cron: "0 0 * * 0" # Run at 00:00 UTC every Sunday
   workflow_dispatch:
 
 jobs:
@@ -19,20 +19,26 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - uses: peaceiris/actions-hugo@v3
+          node-version: 22
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache
         with:
-          hugo-version: '0.125.6'
-          extended: true
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - run: npm ci
 
-      - run: pnpm install
-
-      - run: make build
+      - run: npx astro build
         env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
+          NODE_OPTIONS: "--max-old-space-size=4192"
 
       - name: Install dependencies
         run: curl https://htmltest.wjdp.uk | bash

@@ -19,37 +19,30 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - uses: peaceiris/actions-hugo@v3
+          node-version: 22
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache
         with:
-          hugo-version: '0.125.6'
-          extended: true
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - run: npm ci
+      - run: npm run check
 
-      - run: pnpm install
+      ## TODO: formatting checks
 
-      - run: make build
+      - run: npm run build
         env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
-
-      - name: Check - Broken Links
-        run: pnpm run crawl
-        if: success()
+          NODE_OPTIONS: "--max-old-space-size=4192"
+          RUN_LINK_CHECK: true
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts
-
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
