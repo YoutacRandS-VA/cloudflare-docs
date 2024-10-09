@@ -138,6 +138,14 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
+:::note 
+
+
+The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead. 
+
+
+:::
+
 Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
@@ -178,11 +186,6 @@ wrangler generate [<NAME>] [TEMPLATE]
 ## `d1`
 
 Interact with Cloudflare's D1 service.
-
-:::note
-
-Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 ### `create`
 
@@ -271,13 +274,6 @@ You must provide either `--command` or `--file` for this command to run successf
   - Number of queries to send in a single batch.
 
 ### `export`
-
-:::caution
-
-This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
-:::
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
 
@@ -439,6 +435,8 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your locally persisted D1 database.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Show the list of unapplied migration files on your remote D1 database.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -484,11 +482,6 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 ---
 
 ## `vectorize`
-
-:::note
-
-Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -736,19 +729,18 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Path to a custom certificate.
 - `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional experimental" />
-  - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` <Type text="string" /> <MetaInfo text="optional experimental" /> 
-  - Root folder of static assets to be served.
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets to be served.
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets for Workers Sites.
     :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/).
     :::
-- `--site` <Type text="string" /> <MetaInfo text="optional" />
-  - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` <Type text="'http'|'https'" /> <MetaInfo text="(default: https) optional" />
   - Protocol to forward requests to host on.
@@ -801,7 +793,7 @@ None of the options for this command are required. Also, many can be set in your
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
-- `--no-bundle` <Type text="boolean" />  <MetaInfo text="(default: false) optional" />
+- `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -813,19 +805,18 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional experimental" />
-  - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` <Type text="string" /> <MetaInfo text="optional experimental" />
-  - Root folder of static assets to be served.
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets to be served.
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets for Workers Sites.
     :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/).
     :::
-- `--site` <Type text="string" /> <MetaInfo text="optional" />
-  - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
@@ -1307,11 +1298,11 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
   - The directory of static assets to serve.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" /> 
+- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Run on your local machine.
 - `--ip` <Type text="string" /> <MetaInfo text="optional" />
   - IP address to listen on, defaults to `localhost`.
-- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" /> 
+- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
 - `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
@@ -1323,18 +1314,26 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
-- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" /> 
+- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" />
   - Auto reload HTML pages when change is detected.
 - `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Runtime compatibility flags to apply.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" /> 
+- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" />
   - Show the interactive dev session.
 - `--https-key-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate key.
 - `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate.
+
+### `download config`
+
+Download your Pages project config as a wrangler.toml file.
+
+```txt
+wrangler pages download config <PROJECT_NAME>
+```
 
 ### `project list`
 
@@ -1523,11 +1522,6 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
 ## `queues`
 
-:::note
-
-Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
-
 Manage your Workers [Queues](/queues/) configurations.
 
 ### `create`
@@ -1608,7 +1602,7 @@ wrangler queues consumer remove <queue-name> <script-name>
 
 Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
 
-If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ```txt
 wrangler login [OPTIONS]
