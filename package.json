@@ -80,14 +80,9 @@
 		"yaml": "^2.5.1"
 	},
 	"engines": {
-		"node": ">=22"
+    "node": "20.x"
 	},
 	"volta": {
 		"node": "22.8.0"
 	}
-}
-{
-  "engines": {
-    "node": "20.x"
-  }
 }
