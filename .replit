@@ -1,4 +1,4 @@
-hidden=[".config"]
+hidden=["fasho_dough.config"]
 modules = ["web:v2-20230623-0b7a606"]
 
 [deployment]
