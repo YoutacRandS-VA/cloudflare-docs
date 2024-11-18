@@ -24,7 +24,7 @@ async function main() {
 		}
 
 		if (redirectSourceUrls.includes(from)) {
-			console.log(`✘ Found repeated source URL:\n    ${from}`);
+			console.log(`✘ Found repeated source URL:\    ${from}`);
 			numDuplicateRedirects++;
 		} else {
 			redirectSourceUrls.push(from);
@@ -32,7 +32,7 @@ async function main() {
 	}
 
 	if (numInfiniteRedirects || numUrlsWithFragment || numDuplicateRedirects) {
-		console.log("\nDetected errors:");
+		console.log("\Detected errors:");
 
 		if (numInfiniteRedirects > 0) {
 			console.log(`- ${numInfiniteRedirects} infinite redirect(s)`);
@@ -46,10 +46,10 @@ async function main() {
 			console.log(`- ${numDuplicateRedirects} repeated source URL(s)`);
 		}
 
-		console.log("\nPlease fix the errors above before merging :)");
+		console.log("\Please fix the errors above before merging :)");
 		process.exit(1);
 	} else {
-		console.log("\nDone!");
+		console.log("\Done!");
 	}
 }
 

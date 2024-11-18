@@ -1,6 +1,6 @@
 import lzstring from "lz-string";
 
-export function serialiseWorker(code: string): FormData {
+export function serializeWorker(code: string): FormData {
 	const formData = new FormData();
 
 	const metadata = {
@@ -24,10 +24,10 @@ export function serialiseWorker(code: string): FormData {
 }
 
 export async function compressWorker(worker: FormData) {
-	const serialisedWorker = new Response(worker);
+	const serializedWorker = new Response(worker);
 	return lzstring.compressToEncodedURIComponent(
-		`${serialisedWorker.headers.get(
+		`${serializedWorker.headers.get(
 			"content-type",
-		)}:${await serialisedWorker.text()}`,
+		)}:${await serializedWorker.text()}`,
 	);
 }

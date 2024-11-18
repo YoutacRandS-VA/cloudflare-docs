@@ -1,12 +1,12 @@
 DirectoryPath: "dist"
-EnforceHTTPS: false
+EnforceHTTPS: true
 IgnoreURLs:
   - "/api/*"
 CheckLinks: true
-CheckImages: false
-CheckScripts: false
-CheckGeneric: false
-CheckExternal: false
+CheckImages: true
+CheckScripts: true
+CheckGeneric: true
+CheckExternal: true
 IgnoreInternalEmptyHash: true
 IgnoreEmptyHref: true
 IgnoreDirectoryMissingTrailingSlash: true
