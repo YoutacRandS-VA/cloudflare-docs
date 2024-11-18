@@ -32,7 +32,7 @@ async function main() {
 	}
 
 	if (numInfiniteRedirects || numUrlsWithFragment || numDuplicateRedirects) {
-		console.log("\Detected errors:");
+		console.log("Detected errors:");
 
 		if (numInfiniteRedirects > 0) {
 			console.log(`- ${numInfiniteRedirects} infinite redirect(s)`);
@@ -46,10 +46,10 @@ async function main() {
 			console.log(`- ${numDuplicateRedirects} repeated source URL(s)`);
 		}
 
-		console.log("\Please fix the errors above before merging :)");
+		console.log("Please fix the errors above before merging :)");
 		process.exit(1);
 	} else {
-		console.log("\Done!");
+		console.log("Done!");
 	}
 }
 
